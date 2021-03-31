@@ -37,8 +37,13 @@ class ThemeProvider with ChangeNotifier {
 
   ThemeData themeData() {
     return ThemeData(
-      fontFamily: "OpenSans",
-      textTheme: TextTheme(headline6: TextStyle(fontWeight: FontWeight.w900)),
+      fontFamily: "ProductSans",
+      textTheme: TextTheme(
+        headline6: TextStyle(
+          fontWeight: FontWeight.w900,
+          color: Colors.white,
+        ),
+      ),
       unselectedWidgetColor: Colors.black,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       primarySwatch: isLightTheme ? Colors.green : Colors.green,

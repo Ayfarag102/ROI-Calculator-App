@@ -2,6 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:roi_calculator_app/models_providers/theme_provider.dart';
+import 'package:roi_calculator_app/widgets/main_drawer.dart';
 
 class ROIForm extends StatefulWidget {
   @override
@@ -118,12 +121,15 @@ Conclusion: The investor's portfolio has an annualized return of 32% over a peri
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Simple ROI Calculator App",
             style: Theme.of(context).textTheme.headline6),
       ),
+      drawer: MainDrawer(width),
       body: Form(
         key: _formKey,
         // margin: EdgeInsets.all(20.0),
@@ -152,7 +158,9 @@ Conclusion: The investor's portfolio has an annualized return of 32% over a peri
                           hintText: amountInvestedHintTxt,
                           labelStyle: TextStyle(
                             letterSpacing: 0.5,
-                            color: Colors.white,
+                            color: themeProvider.isLightTheme
+                                ? Color(0xFF1E1F28)
+                                : Colors.white,
                           ),
                           errorStyle: TextStyle(
                             color: Colors.yellowAccent,
@@ -187,7 +195,9 @@ Conclusion: The investor's portfolio has an annualized return of 32% over a peri
                           labelText: amountReturnedLblTxt,
                           labelStyle: TextStyle(
                             letterSpacing: 0.5,
-                            color: Colors.white,
+                            color: themeProvider.isLightTheme
+                                ? Color(0xFF1E1F28)
+                                : Colors.white,
                           ),
                           hintText: amountReturnedHintTxt,
                           errorStyle: TextStyle(
@@ -218,7 +228,7 @@ Conclusion: The investor's portfolio has an annualized return of 32% over a peri
                 ),
               ),
 
-              /// Add Row (W/ Gold Purity DropDown & Gold Price TextFormField)
+              /// Add Row (W/ Investment Length DropDown & Gold Price TextFormField)
               Padding(
                 padding: EdgeInsets.only(
                   top: _minPadding,
@@ -226,16 +236,21 @@ Conclusion: The investor's portfolio has an annualized return of 32% over a peri
                 ),
                 //   child:
 
-                child: DropdownButton<String>(
+                child: DropdownButtonFormField<String>(
                   hint: Text(investmentLengthHintTxt),
                   items: _investmentLength.map(
                     (String val) {
                       return DropdownMenuItem<String>(
                         value: val,
-                        child: Text(val),
+                        child: Text(val, textAlign: TextAlign.justify),
                       );
                     },
                   ).toList(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      color: themeProvider.isLightTheme
+                          ? Color(0xFF1E1F28)
+                          : Colors.white),
                   onChanged: (String length) {
                     debugPrint(length);
                     _onDropDownInvestmentItemSelected(length);
@@ -245,7 +260,7 @@ Conclusion: The investor's portfolio has an annualized return of 32% over a peri
               ),
               // ),
 
-              /// Add Row (W/ Calculate Gold Scrap Value and Reset)
+              /// Add Row (W/ Calculate ROI and Reset)
 
               Row(
                 children: <Widget>[
@@ -290,6 +305,11 @@ Conclusion: The investor's portfolio has an annualized return of 32% over a peri
                       child: Text(
                     this.displayResult,
                     textAlign: TextAlign.center,
+                    style: TextStyle(
+                        //fontWeight: FontWeight.w300,
+                        color: themeProvider.isLightTheme
+                            ? Color(0xFF1E1F28)
+                            : Colors.white),
                   )),
                 ),
               ),

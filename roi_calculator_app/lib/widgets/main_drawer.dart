@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:note_keeper_app/components/z_animated_toggle.dart';
+import './../components/z_animated_toggle.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite/sqflite.dart';
 import './../models_providers/theme_provider.dart';
 
 class MainDrawer extends StatefulWidget {
